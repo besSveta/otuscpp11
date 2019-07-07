@@ -49,4 +49,4 @@ include(CPack)
 
 enable_testing()
 
-add_test(test_async test_bulk)
+add_test(test_async test_async)
