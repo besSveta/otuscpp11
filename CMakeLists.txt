@@ -4,7 +4,7 @@ project(async VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 find_package(Threads REQUIRED)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-add_library(libasync bulkasync_lib.cpp)
+add_library(libasync SHARED async.cpp)
 add_executable(test_async test_async.cpp)
 
 set_target_properties(test_async libasync PROPERTIES
@@ -27,7 +27,8 @@ target_link_libraries(test_async
 	libasync
 )
 	
-install(TARGETS libasync RUNTIME DESTINATION bin)
+install(TARGETS libasync RUNTIME DESTINATION lib)
+install(FILES async.h DESTINATION include)
 
 set(CPACK_GENERATOR DEB)
 
