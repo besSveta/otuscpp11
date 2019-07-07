@@ -4,7 +4,9 @@ project(async VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 find_package(Threads REQUIRED)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-add_library(libasync SHARED async.cpp)
+add_library(libasync SHARED 
+async.cpp
+bulkasync_lib.cpp)
 add_executable(test_async test_async.cpp)
 
 set_target_properties(test_async libasync PROPERTIES
@@ -26,9 +28,11 @@ target_link_libraries(test_async
 	${Boost_LIBRARIES}
 	libasync
 )
-	
-install(TARGETS libasync RUNTIME DESTINATION lib)
-install(FILES async.h DESTINATION include)
+
+include(GNUInstallDirs)	
+install(TARGETS libasync
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 set(CPACK_GENERATOR DEB)
 
